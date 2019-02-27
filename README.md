@@ -11,15 +11,15 @@ A `Serialize` and `Deserialize` class to read and write to the FS.
 
 A `Battle` class which runs the deserialized instructions, updates the arena and positions, marks Knights as dead, etc.
 
+This requires `Python 3.7` to run since it leverages the new dataclass notation.
 
 # Outline of classes
 
 ## Knight dataclass:
 
     ID: R
-    X: 0
-    Y: 0
-    Equiped: <item>
+    pos: <Pos>
+    equipped: <Item>
     BaseAttack: 1
     BaseDefence: 1
 

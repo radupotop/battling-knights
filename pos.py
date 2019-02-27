@@ -1,4 +1,4 @@
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 
 @dataclass
 class Pos:
@@ -7,5 +7,5 @@ class Pos:
     """
     x: int
     y: int
-    knights: set
-    items: set
+    knights: set = field(default_factory=set)
+    items: set = field(default_factory=set)
