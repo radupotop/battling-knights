@@ -25,12 +25,12 @@ This requires `Python 3.7` to run since it leverages the new `@dataclass` notati
 
 ## Arena class:
 
-### Properties
+**Properties**
 
     board - 2 dimensional matrix
             each item is a POS element
 
-### Methods
+**Methods**
 
     move_knight - allowed (N,S,E,W)
         move_empty_square - update position

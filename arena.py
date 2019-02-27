@@ -3,22 +3,23 @@ from dataclasses import dataclass, field
 from pos import Pos
 
 
-def empty_matrix():
-    return [[], [], [], [], [], [], [], []]
-
-
-@dataclass
 class Arena:
     """
     The Arena class handles movement of its knights and items.
+
+    The `board` property is a matrix of Pos elements.
     """
+    def __init__(self):
+        self.board = [[], [], [], [], [], [], [], []]
 
-    board: list = field(default_factory=empty_matrix)
+        for x in range(0, 8):
+            for y in range(0, 8):
+                self.board[x].append(Pos(x, y))
 
-    def move_knight(knight, direction):
-        pass
+    def move_knight(self, knight, direction):
+        x, y = self._direction_to_xy(direction, knight.pos)
 
-    def _direction_to_xy(direction: str, old_pos: Pos):
+    def _direction_to_xy(self, direction: str, old_pos: Pos):
         dir_map = {
             'N': (old_pos.x, old_pos.y - 1),
             'S': (old_pos.x, old_pos.y + 1),
@@ -27,14 +28,14 @@ class Arena:
         }
         return dir_map[direction]
 
-    def _is_empty_square(pos):
+    def _is_empty_square(self, pos):
         return len(pos.knights) + len(pos.items) == 0
 
-    def _is_square_with_item(pos):
+    def _is_square_with_item(self, pos):
         return len(pos.items) > 0
 
-    def _is_square_with_knight(pos):
+    def _is_square_with_knight(self, pos):
         return len(pos.knights) > 0
 
-    def _is_square_with_water(pos):
+    def _is_square_with_water(self, pos):
         return (pos.x < 0 or pos.x > 8) and (pos.y < 0 or pos.y > 8)
