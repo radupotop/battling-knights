@@ -7,5 +7,5 @@ class Pos:
     """
     x: int
     y: int
-    knights: set = field(default_factory=set)
-    items: set = field(default_factory=set)
+    knights: list = field(default_factory=list)
+    items: list = field(default_factory=list)

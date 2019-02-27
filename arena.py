@@ -10,11 +10,14 @@ class Arena:
     The `board` property is a matrix of Pos elements.
     """
     def __init__(self):
-        self.board = [[], [], [], [], [], [], [], []]
-
+        board = []
         for x in range(0, 8):
+            row = []
             for y in range(0, 8):
-                self.board[x].append(Pos(x, y))
+                row.append(Pos(x, y))
+            board.append(tuple(row))
+
+        self.board = tuple(board)
 
     def move_knight(self, knight, direction):
         x, y = self._direction_to_xy(direction, knight.pos)

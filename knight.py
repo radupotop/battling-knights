@@ -8,6 +8,6 @@ from pos import Pos
 class Knight:
     id: str # One of: R,G,B,Y
     pos: Pos
-    equipped: Item
+    equipped: Item = None
     base_attack: int = 1
     base_defence: int = 1
