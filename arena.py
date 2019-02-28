@@ -14,8 +14,8 @@ class Arena:
 
     def __init__(self):
         board = []
-        for x in range(0, 8):
-            row = [Pos(x, y) for y in range(0, 8)]
+        for y in range(0, 8):
+            row = [Pos(y, x) for x in range(0, 8)]
             board.append(tuple(row))
 
         self.board = tuple(board)
@@ -50,15 +50,26 @@ class Arena:
 
         return knight
 
+    def render(self):
+        for row in self.board:
+            for pos in row:
+                if pos.knight:
+                    print('♞' + str(pos.knight.id).upper(), end='')
+                elif len(pos.items):
+                    print('🗡' + str(pos.items[0].name[0]).lower(), end='')
+                else:
+                    print(' ', end='')
+            print('')
+
     def _direction_to_pos(self, direction: str, old_pos: Pos):
         dir_map = {
-            'N': (old_pos.x, old_pos.y - 1),
-            'S': (old_pos.x, old_pos.y + 1),
-            'E': (old_pos.x + 1, old_pos.y),
-            'W': (old_pos.x - 1, old_pos.y),
+            'N': (old_pos.y - 1, old_pos.x),
+            'S': (old_pos.y + 1, old_pos.x),
+            'E': (old_pos.y, old_pos.x + 1),
+            'W': (old_pos.y, old_pos.x - 1),
         }
-        x, y = dir_map[direction]
-        return self.board[x][y]
+        y, x = dir_map[direction]
+        return self.board[y][x]
 
     def _is_empty_square(self, pos):
         return not pos.knight and len(pos.items) is 0

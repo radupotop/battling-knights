@@ -5,7 +5,7 @@ class Pos:
     """
     This represents a 'square' on the board.
     """
-    x: int
     y: int
+    x: int
     knight: dict = None
     items: list = field(default_factory=list)

@@ -9,14 +9,14 @@ ab = arena.board
 # Setup initial board with: knights, items, and positions.
 
 kR = Knight('R', ab[0][0])
+kY = Knight('Y', ab[0][7])
 kB = Knight('B', ab[7][0])
 kG = Knight('G', ab[7][7])
-kY = Knight('Y', ab[0][7])
 
 ab[0][0].knight = kR
+ab[0][7].knight = kY
 ab[7][0].knight = kB
 ab[7][7].knight = kG
-ab[0][7].knight = kY
 
 
 item_axe = Item('Axe', 4, ab[2][2], 2, 0)
