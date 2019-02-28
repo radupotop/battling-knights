@@ -29,23 +29,29 @@ class Arena:
         if self._is_empty_square(_pos):
             knight.pos = _pos
             _pos.knight = knight
+            print('Moved', knight)
         elif self._is_square_with_item(_pos):
             knight.pos = _pos
             _pos.items.sort(key=attrgetter('priority'))
             knight.equipped = _pos.items.pop()
             _pos.knight = knight
+            print('Acquired item', knight)
         elif self._is_square_with_water(_pos):
             loot = Battle.kill_knight(knight, status=2)
             _pos.items.append(loot)
             _pos.knight = None
+            print('Drowned', knight)
         elif self._is_square_with_knight(_pos):
             # Battle!
+            print('Attack ', knight)
             winner, loser = Battle.attack(knight, _pos.knight)
             loot = Battle.kill_knight(loser)
             winner.pos = _pos
             _pos.items.append(loot)
             _pos.knight = winner
-            print('Battle! winner:', winner, 'loser:', loser)
+            print('## BATTLE ##')
+            print('Winner:', winner)
+            print('Loser:', loser)
             return winner
 
         return knight
@@ -55,9 +61,9 @@ class Arena:
         for row in self.board:
             for pos in row:
                 if pos.knight:
-                    print('♞' + str(pos.knight.id).upper(), end='')
+                    print('🦁' + pos.knight.id, end='')
                 elif len(pos.items):
-                    print('🗡' + str(pos.items[0].name[0]).lower(), end='')
+                    print('🗡' + pos.items[0].name[0], end='')
                 else:
                     print('  ', end='')
             print('')
