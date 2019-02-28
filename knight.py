@@ -24,3 +24,6 @@ class Knight:
             self.base_attack,
             self.base_defence
         ]
+
+    def update_status(self, idx):
+        self.status = STATUS_OPTS[idx]

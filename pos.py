@@ -7,5 +7,5 @@ class Pos:
     """
     x: int
     y: int
-    knights: list = field(default_factory=list)
+    knight: dict = None
     items: list = field(default_factory=list)

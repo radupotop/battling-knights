@@ -13,10 +13,10 @@ kB = Knight('B', ab[7][0])
 kG = Knight('G', ab[7][7])
 kY = Knight('Y', ab[0][7])
 
-ab[0][0].knights.append(kR)
-ab[7][0].knights.append(kB)
-ab[7][7].knights.append(kG)
-ab[0][7].knights.append(kY)
+ab[0][0].knight = kR
+ab[7][0].knight = kB
+ab[7][7].knight = kG
+ab[0][7].knight = kY
 
 
 item_axe = Item('Axe', 4, ab[2][2], 2, 0)
