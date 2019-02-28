@@ -1,8 +1,12 @@
 from dataclasses import dataclass, field
 from operator import attrgetter
 
-from pos import Pos
 from battle import Battle
+from pos import Pos
+
+
+class Drowned(Exception):
+    pass
 
 
 class Arena:
@@ -21,40 +25,41 @@ class Arena:
         self.board = tuple(board)
 
     def move_knight(self, knight, direction):
-        _pos = self._direction_to_pos(direction, knight.pos)
-
         # clear out the old position square
         knight.pos.knight = None
 
-        if self._is_square_with_knight(_pos):
-            # Battle!
-            winner, loser = Battle.attack(knight, _pos.knight)
-            loot = Battle.kill_knight(loser)
-            winner.pos = _pos
-            _pos.items.append(loot)
-            _pos.knight = winner
-            print('⚔⚔ BATTLE ⚔⚔')
-            print('👍 Winner:', winner)
-            print('👎 Loser:', loser)
-            return winner
-
-        if self._is_empty_square(_pos):
-            knight.pos = _pos
-            _pos.knight = knight
-            print('🏇 Moved', knight)
-        elif self._is_square_with_item(_pos):
-            knight.pos = _pos
-            _pos.items.sort(key=attrgetter('priority'))
-            knight.equipped = _pos.items.pop()
-            _pos.knight = knight
-            print('💍 Acquired item', knight)
-        elif self._is_square_with_water(_pos):
-            loot = Battle.kill_knight(knight, status=2)
-            _pos.items.append(loot)
-            _pos.knight = None
+        try:
+            _pos = self._direction_to_pos(direction, knight.pos)
+        except Drowned:
+            if knight.equipped:
+                knight.pos.items.append(knight.equipped)
+            Battle.kill_knight(knight, status=2)
             print('🌊 Drowned', knight)
+        else:
+            if self._is_square_with_knight(_pos):
+                # Battle!
+                winner, loser = Battle.attack(knight, _pos.knight)
+                loot = Battle.kill_knight(loser)
+                winner.pos = _pos
+                _pos.items.append(loot)
+                _pos.knight = winner
+                print('⚔⚔ BATTLE ⚔⚔')
+                print('👍 Winner:', winner)
+                print('👎 Loser:', loser)
+                return winner
 
-        return knight
+            if self._is_empty_square(_pos):
+                knight.pos = _pos
+                _pos.knight = knight
+                print('🏇 Moved', knight)
+            elif self._is_square_with_item(_pos):
+                knight.pos = _pos
+                _pos.items.sort(key=attrgetter('priority'))
+                knight.equipped = _pos.items.pop()
+                _pos.knight = knight
+                print('💍 Acquired', knight.equipped)
+
+            return knight
 
     def render(self):
         print('')
@@ -63,13 +68,21 @@ class Arena:
                 if pos.knight:
                     print('🦁' + pos.knight.id, end='')
                 elif len(pos.items):
-                    print('🗡' + pos.items[0].name[0], end='')
+                    print('🗡' + pos.items[0].name[0] if pos.items[0] else '', end='')
                 else:
                     print('  ', end='')
             print('')
         print('')
 
     def _direction_to_pos(self, direction: str, old_pos: Pos):
+        """
+        Translate direction to Pos instance.
+        Out of bounds coordinates will raise a `Drowned` error.
+        This is needed in order to deal with tuple index wrap-around.
+
+        e.g. On the initial board, when going North, the Y knight's
+             position will wrap around and end up battling the G knight!
+        """
         dir_map = {
             'N': (old_pos.y - 1, old_pos.x),
             'S': (old_pos.y + 1, old_pos.x),
@@ -77,6 +90,10 @@ class Arena:
             'W': (old_pos.y, old_pos.x - 1),
         }
         y, x = dir_map[direction]
+
+        if x < 0 or x > 7 or y < 0 or y > 7:
+            raise Drowned('Knight drowned')
+
         return self.board[y][x]
 
     def _is_empty_square(self, pos):
@@ -87,6 +104,3 @@ class Arena:
 
     def _is_square_with_knight(self, pos):
         return pos.knight is not None
-
-    def _is_square_with_water(self, pos):
-        return (pos.x < 0 or pos.x > 8) and (pos.y < 0 or pos.y > 8)

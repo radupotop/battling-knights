@@ -1,7 +1,7 @@
 from pathlib import Path
 
-class Deserialize:
 
+class Deserialize:
     @staticmethod
     def read_moves():
         """
@@ -11,6 +11,6 @@ class Deserialize:
         moves = _contents.strip().split('\n')
         if moves[0] == 'GAME-START':
             moves.pop(0)
-        if moves[-1] =='GAME-END':
+        if moves[-1] == 'GAME-END':
             moves.pop()
         return tuple(tuple(m.split(':')) for m in moves)
