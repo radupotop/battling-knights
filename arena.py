@@ -23,19 +23,30 @@ class Arena:
     def move_knight(self, knight, direction):
         _pos = self._direction_to_pos(direction, knight.pos)
 
+        # clear out the old position square
+        knight.pos.knight = None
+
         if self._is_empty_square(_pos):
             knight.pos = _pos
+            _pos.knight = knight
         elif self._is_square_with_item(_pos):
-            knight.equipped = _pos.items.sort(key=attrgetter('priority')).pop()
+            knight.pos = _pos
+            _pos.items.sort(key=attrgetter('priority'))
+            knight.equipped = _pos.items.pop()
+            _pos.knight = knight
         elif self._is_square_with_water(_pos):
-            loot = Battle._kill_knight(knight, status=2)
+            loot = Battle.kill_knight(knight, status=2)
             _pos.items.append(loot)
+            _pos.knight = None
         elif self._is_square_with_knight(_pos):
             # Battle!
             winner, loser = Battle.attack(knight, _pos.knight)
-            loot = Battle._kill_knight(loser)
-            _pos.items.append(loot)
+            loot = Battle.kill_knight(loser)
             winner.pos = _pos
+            _pos.items.append(loot)
+            _pos.knight = winner
+            print('Battle! winner:', winner, 'loser:', loser)
+            return winner
 
         return knight
 
