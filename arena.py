@@ -28,27 +28,16 @@ class Arena:
         elif self._is_square_with_item(_pos):
             knight.equipped = _pos.items.sort(key=attrgetter('priority')).pop()
         elif self._is_square_with_water(_pos):
-            loot = self._kill_knight(knight, status=2)
+            loot = Battle._kill_knight(knight, status=2)
             _pos.items.append(loot)
         elif self._is_square_with_knight(_pos):
-            # Attack!
-            Battle.attack(knight, _pos.knight)
+            # Battle!
+            winner, loser = Battle.attack(knight, _pos.knight)
+            loot = Battle._kill_knight(loser)
+            _pos.items.append(loot)
+            winner.pos = _pos
 
         return knight
-
-    def _kill_knight(self, knight, status=1):
-        """
-        Kill knight and return loot.
-        """
-        equipped_item = knight.equipped
-
-        knight.update_status(status)
-        knight.pos = None
-        knight.equipped = None
-        knight.base_attack = 0
-        knight.base_defence = 0
-
-        return equipped_item
 
     def _direction_to_pos(self, direction: str, old_pos: Pos):
         dir_map = {
