@@ -1,3 +1,5 @@
+# Battling Knights
+
 Note: This requires `Python 3.7` to run since it leverages the new `@dataclass` notation.
 
 
