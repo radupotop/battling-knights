@@ -1,5 +1,5 @@
 import unittest
-from run import setup_board
+from run import RunGame
 
 
 class TestCase(unittest.TestCase):
@@ -14,7 +14,7 @@ class TestCase(unittest.TestCase):
             self.item_dagger,
             self.item_magicstagg,
             self.item_helmet,
-        ) = setup_board()
+        ) = RunGame().setup_board()
 
     def testKnightMoves(self):
         self.arena.move_knight(self.kR, 'S')

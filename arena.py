@@ -26,33 +26,33 @@ class Arena:
         # clear out the old position square
         knight.pos.knight = None
 
-        if self._is_empty_square(_pos):
-            knight.pos = _pos
-            _pos.knight = knight
-            print('Moved', knight)
-        elif self._is_square_with_item(_pos):
-            knight.pos = _pos
-            _pos.items.sort(key=attrgetter('priority'))
-            knight.equipped = _pos.items.pop()
-            _pos.knight = knight
-            print('Acquired item', knight)
-        elif self._is_square_with_water(_pos):
-            loot = Battle.kill_knight(knight, status=2)
-            _pos.items.append(loot)
-            _pos.knight = None
-            print('Drowned', knight)
-        elif self._is_square_with_knight(_pos):
+        if self._is_square_with_knight(_pos):
             # Battle!
-            print('Attack ', knight)
             winner, loser = Battle.attack(knight, _pos.knight)
             loot = Battle.kill_knight(loser)
             winner.pos = _pos
             _pos.items.append(loot)
             _pos.knight = winner
-            print('## BATTLE ##')
-            print('Winner:', winner)
-            print('Loser:', loser)
+            print('⚔⚔ BATTLE ⚔⚔')
+            print('👍 Winner:', winner)
+            print('👎 Loser:', loser)
             return winner
+
+        if self._is_empty_square(_pos):
+            knight.pos = _pos
+            _pos.knight = knight
+            print('🏇 Moved', knight)
+        elif self._is_square_with_item(_pos):
+            knight.pos = _pos
+            _pos.items.sort(key=attrgetter('priority'))
+            knight.equipped = _pos.items.pop()
+            _pos.knight = knight
+            print('💍 Acquired item', knight)
+        elif self._is_square_with_water(_pos):
+            loot = Battle.kill_knight(knight, status=2)
+            _pos.items.append(loot)
+            _pos.knight = None
+            print('🌊 Drowned', knight)
 
         return knight
 

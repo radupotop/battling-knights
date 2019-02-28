@@ -10,8 +10,4 @@ R:S
 R:S
 R:S
 R:S
-B:E
-G:N
-Y:N
 GAME-END
-
