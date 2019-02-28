@@ -29,6 +29,8 @@ class TestCase(unittest.TestCase):
         self.assertEqual(len(self.arena.board[2][2].items), 0)
         self.assertEqual(self.arena.board[2][2].knight, self.kR)
 
+        self.arena.render()
+
     def testKnightBattle(self):
         self.arena.move_knight(self.kR, 'E')
         self.arena.move_knight(self.kR, 'E')
@@ -50,6 +52,13 @@ class TestCase(unittest.TestCase):
         self.assertEqual(self.kR.status, 'LIVE')
 
         self.assertEqual(self.kB.status, 'DEAD')
+
+        self.arena.render()
+
+    # def testKnightDrown(self):
+    #     self.arena.move_knight(self.kR, 'N')
+    #     print(self.arena)
+    #     self.assertEqual(self.kR.status, 'DROWNED')
 
 
 if __name__ == '__main__':

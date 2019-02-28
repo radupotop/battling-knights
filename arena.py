@@ -51,6 +51,7 @@ class Arena:
         return knight
 
     def render(self):
+        print('')
         for row in self.board:
             for pos in row:
                 if pos.knight:
@@ -60,6 +61,7 @@ class Arena:
                 else:
                     print('  ', end='')
             print('')
+        print('')
 
     def _direction_to_pos(self, direction: str, old_pos: Pos):
         dir_map = {

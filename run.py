@@ -2,6 +2,7 @@ from arena import Arena
 from knight import Knight
 from item import Item
 
+
 def setup_board():
     """
     Setup initial board with: knights, items, and positions.
@@ -32,5 +33,21 @@ def setup_board():
     return (arena, kR, kY, kB, kG, item_axe, item_dagger, item_magicstaff, item_helmet)
 
 
+def run_instructions(instructions):
+    pass
+
+
 if __name__ == '__main__':
-    setup_board()
+    (
+        arena,
+        kR,
+        kY,
+        kB,
+        kG,
+        item_axe,
+        item_dagger,
+        item_magicstaff,
+        item_helmet,
+    ) = setup_board()
+
+
