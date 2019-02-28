@@ -58,7 +58,7 @@ class Arena:
                 elif len(pos.items):
                     print('🗡' + str(pos.items[0].name[0]).lower(), end='')
                 else:
-                    print(' ', end='')
+                    print('  ', end='')
             print('')
 
     def _direction_to_pos(self, direction: str, old_pos: Pos):
