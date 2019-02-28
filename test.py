@@ -1,4 +1,5 @@
 import unittest
+
 from run import RunGame
 
 
@@ -16,6 +17,9 @@ class TestCase(unittest.TestCase):
             self.item_helmet,
         ) = RunGame().setup_board()
 
+    def tearDown(self):
+        self.arena.render()
+
     def testKnightMoves(self):
         self.arena.move_knight(self.kR, 'S')
         self.arena.move_knight(self.kR, 'S')
@@ -28,8 +32,6 @@ class TestCase(unittest.TestCase):
 
         self.assertEqual(len(self.arena.board[2][2].items), 0)
         self.assertEqual(self.arena.board[2][2].knight, self.kR)
-
-        self.arena.render()
 
     def testKnightBattle(self):
         self.arena.move_knight(self.kR, 'E')
@@ -52,8 +54,6 @@ class TestCase(unittest.TestCase):
         self.assertEqual(self.kR.status, 'LIVE')
 
         self.assertEqual(self.kB.status, 'DEAD')
-
-        self.arena.render()
 
     def testKnightDrown(self):
         self.arena.move_knight(self.kY, 'N')
