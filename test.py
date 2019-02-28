@@ -55,10 +55,12 @@ class TestCase(unittest.TestCase):
 
         self.arena.render()
 
-    # def testKnightDrown(self):
-    #     self.arena.move_knight(self.kR, 'N')
-    #     print(self.arena)
-    #     self.assertEqual(self.kR.status, 'DROWNED')
+    def testKnightDrown(self):
+        self.arena.move_knight(self.kY, 'N')
+        self.assertEqual(self.kY.status, 'DROWNED')
+
+        self.arena.move_knight(self.kG, 'E')
+        self.assertEqual(self.kG.status, 'DROWNED')
 
 
 if __name__ == '__main__':
