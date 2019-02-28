@@ -9,12 +9,11 @@ class Arena:
 
     The `board` property is a matrix of Pos elements.
     """
+
     def __init__(self):
         board = []
         for x in range(0, 8):
-            row = []
-            for y in range(0, 8):
-                row.append(Pos(x, y))
+            row = [Pos(x, y) for y in range(0, 8)]
             board.append(tuple(row))
 
         self.board = tuple(board)
