@@ -1,17 +1,25 @@
+Note: This requires `Python 3.7` to run since it leverages the new `@dataclass` notation.
+
+
 We model this game using a few classes:
 
 The `Knight` class will hold properties such as ID, position, items equipped, base attack, etc.
 
-The `Arena` class will be mainly concerned with storing the positon of everything on the board and
-launching attacks.
+The `Arena` class will be mainly concerned with storing the positon of everything on the board and moving things around.
 
-The `POS` class is used by both Knight and Arena to determine their position.
+The `Item` class used to describe items on the board.
+
+The `POS` class is the building block of the board; is used by both Knight and Arena to determine their position.
+
+A `Battle` class which deals with the life and death of knights.
 
 A `Serialize` and `Deserialize` class to read and write to the FS.
 
-A `Battle` class which runs the deserialized instructions, updates the arena and positions, marks Knights as dead, etc.
+These classes reference each other like so:
 
-This requires `Python 3.7` to run since it leverages the new `@dataclass` notation.
+A knight instance has a `pos` attribute so it always knows where it's placed on the board.
+A `pos` instance always knows whether it holds _items_ or a _knight_.
+
 
 # Outline of classes
 
