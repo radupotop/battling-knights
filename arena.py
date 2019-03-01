@@ -41,8 +41,10 @@ class Arena:
                 # Battle!
                 winner, loser = Battle.attack(knight, _pos.knight)
                 loot = Battle.kill_knight(loser)
+                if loot:
+                    _pos.items.append(loot)
+                    _pos.items.sort(key=attrgetter('priority'))
                 winner.pos = _pos
-                _pos.items.append(loot)
                 _pos.knight = winner
                 print('⚔⚔ BATTLE ⚔⚔')
                 print('👍 Winner:', winner)
