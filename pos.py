@@ -14,3 +14,6 @@ class Pos:
 
     def __repr__(self):
         return '[{}, {}]'.format(self.y, self.x)
+
+    def to_json(self):
+        return [self.y, self.x]

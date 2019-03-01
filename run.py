@@ -73,4 +73,6 @@ if __name__ == '__main__':
 
     game.arena.render()
 
-    print(Deserialize.serialize_gamestate((kR, kY, kB, kG), ()))
+    state = Deserialize.serialize_gamestate((kR, kY, kB, kG), (item_axe, item_dagger, item_magicstaff, item_helmet))
+    Deserialize.commit_to_fs(state)
+

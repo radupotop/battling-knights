@@ -1,6 +1,7 @@
 from pathlib import Path
 from json import dumps
 
+
 class Deserialize:
     @staticmethod
     def read_moves():
@@ -18,27 +19,32 @@ class Deserialize:
     @staticmethod
     def serialize_gamestate(knights: list, items: list):
         result = {}
-        _format_str = '{}, "{}", "{}", {}, {}'
+
         for k in knights:
             if k.equipped:
-                result[k.colour] = _format_str.format(
-                    k.pos if k.pos else 'null',
+                k_result = (
+                    k.pos.to_json() if k.pos else None,
                     k.status,
                     k.equipped.name,
                     k.base_attack + k.equipped.attack,
                     k.base_defence + k.equipped.defence,
                 )
             else:
-                result[k.colour] = _format_str.format(
-                    k.pos if k.pos else 'null',
+                k_result = (
+                    k.pos.to_json() if k.pos else None,
                     k.status,
-                    'null',
+                    None,
                     k.base_attack,
                     k.base_defence,
                 )
+            result[k.colour] = k_result
+
+        for i in items:
+            i_result = (i.pos.to_json(), True if i.pos.knight else False)
+            result[i.name] = i_result
 
         return result
 
     @staticmethod
     def commit_to_fs(state):
-        pass
+        return Path('./final_state.json').write_text(dumps(state))

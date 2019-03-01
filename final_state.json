@@ -1,0 +1,10 @@
+{
+    "red": [null, "DEAD", null, 0, 0],
+    "yellow": [null, "DROWNED", null, 0, 0],
+    "blue": [null, "DEAD", null, 0, 0],
+    "green": [[7, 0], "LIVE", "Helmet", 1, 2],
+    "Axe": [[7, 0], true],
+    "Dagger": [[0, 5], false],
+    "MagicStaff": [[5, 2], false],
+    "Helmet": [[7, 0], true]
+}
