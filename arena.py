@@ -76,6 +76,8 @@ class Arena:
         """
         knight.pos = pos
         pos.knight = knight
+        if knight.equipped:
+            knight.equipped.pos = pos
 
     def render(self):
         print('')
