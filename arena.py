@@ -33,8 +33,9 @@ class Arena:
         except Drowned:
             if knight.equipped:
                 knight.pos.items.append(knight.equipped)
-            Battle.kill_knight(knight, status=2)
+            loot = Battle.kill_knight(knight, status=2)
             print('🌊 Drowned', knight)
+            print('🔸 Loot dropped:', loot)
         else:
             if self._is_square_with_knight(_pos):
                 # Battle!
@@ -46,6 +47,7 @@ class Arena:
                 print('⚔⚔ BATTLE ⚔⚔')
                 print('👍 Winner:', winner)
                 print('👎 Loser:', loser)
+                print('🔸 Loot dropped:', loot)
                 return winner
 
             if self._is_empty_square(_pos):
@@ -54,9 +56,10 @@ class Arena:
                 print('🏇 Moved', knight)
             elif self._is_square_with_item(_pos):
                 knight.pos = _pos
-                _pos.items.sort(key=attrgetter('priority'))
-                knight.equipped = _pos.items.pop()
                 _pos.knight = knight
+                _pos.items.sort(key=attrgetter('priority'))
+                if not knight.equipped:
+                    knight.equipped = _pos.items.pop()
                 print('💍 Acquired', knight.equipped)
 
             return knight
