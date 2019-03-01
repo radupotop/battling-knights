@@ -39,8 +39,7 @@ class Arena:
             if self._is_square_with_knight(_pos):
                 # Battle!
                 winner, loser = Battle.attack(knight, _pos.knight)
-                winner.pos = _pos
-                _pos.knight = winner
+                self._move_knight_pos(winner, _pos)
                 loot, last_pos = Battle.kill_knight(loser)
                 print('⚔⚔ BATTLE ⚔⚔')
                 print('👍 Winner:', winner)
@@ -50,16 +49,14 @@ class Arena:
                 return winner
 
             if self._is_empty_square(_pos):
-                knight.pos = _pos
-                _pos.knight = knight
+                self._move_knight_pos(knight, _pos)
                 print('🏇 Moved', knight)
             elif self._is_square_with_item(_pos):
-                knight.pos = _pos
-                _pos.knight = knight
+                self._move_knight_pos(knight, _pos)
                 _pos.items.sort(key=attrgetter('priority'))
                 if not knight.equipped:
                     knight.equipped = _pos.items.pop()
-                print('💍 Acquired', knight.equipped)
+                    print('💍 Acquired', knight.equipped)
 
             return knight
 
@@ -72,6 +69,13 @@ class Arena:
             pos.items.append(item)
             pos.items.sort(key=attrgetter('priority'))
             return True
+
+    def _move_knight_pos(self, knight, pos):
+        """
+        Assign Pos to Knight and vice-versa.
+        """
+        knight.pos = pos
+        pos.knight = knight
 
     def render(self):
         print('')
