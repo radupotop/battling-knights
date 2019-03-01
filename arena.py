@@ -31,25 +31,22 @@ class Arena:
         try:
             _pos = self._direction_to_pos(direction, knight.pos)
         except Drowned:
-            if knight.equipped:
-                knight.pos.items.append(knight.equipped)
-            loot = Battle.kill_knight(knight, status=2)
+            loot, last_pos = Battle.kill_knight(knight, status=2)
             print('🌊 Drowned', knight)
-            print('🔸 Loot dropped:', loot)
+            if self.drop_loot(loot, last_pos):
+                print('🔸 Loot dropped:', loot)
         else:
             if self._is_square_with_knight(_pos):
                 # Battle!
                 winner, loser = Battle.attack(knight, _pos.knight)
-                loot = Battle.kill_knight(loser)
-                if loot:
-                    _pos.items.append(loot)
-                    _pos.items.sort(key=attrgetter('priority'))
                 winner.pos = _pos
                 _pos.knight = winner
+                loot, last_pos = Battle.kill_knight(loser)
                 print('⚔⚔ BATTLE ⚔⚔')
                 print('👍 Winner:', winner)
                 print('👎 Loser:', loser)
-                print('🔸 Loot dropped:', loot)
+                if self.drop_loot(loot, last_pos):
+                    print('🔸 Loot dropped:', loot)
                 return winner
 
             if self._is_empty_square(_pos):
@@ -65,6 +62,16 @@ class Arena:
                 print('💍 Acquired', knight.equipped)
 
             return knight
+
+    def drop_loot(self, item, pos):
+        """
+        Drop item onto Pos, update item pos.
+        """
+        if item:
+            item.pos = pos
+            pos.items.append(item)
+            pos.items.sort(key=attrgetter('priority'))
+            return True
 
     def render(self):
         print('')

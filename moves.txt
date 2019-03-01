@@ -28,4 +28,5 @@ G:W
 G:W
 G:S
 G:S
+G:S
 GAME-END

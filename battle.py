@@ -28,9 +28,10 @@ class Battle:
     @staticmethod
     def kill_knight(knight, status=1):
         """
-        Kill knight and return loot.
+        Kill knight and return loot and last position.
         """
-        equipped_item = knight.equipped
+        loot = knight.equipped
+        last_pos = knight.pos
 
         knight.update_status(status)
         knight.pos = None
@@ -38,4 +39,4 @@ class Battle:
         knight.base_attack = 0
         knight.base_defence = 0
 
-        return equipped_item
+        return loot, last_pos
