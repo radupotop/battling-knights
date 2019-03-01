@@ -33,7 +33,7 @@ class Deserialize:
             result[k.colour] = k_result
 
         for i in items:
-            i_result = (i.pos.to_json(), True if i.pos.knight else False)
+            i_result = (i.pos.to_json(), i.pos.knight is not None)
             result[i.name] = i_result
 
         return result
