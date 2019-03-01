@@ -21,22 +21,15 @@ class Deserialize:
         result = {}
 
         for k in knights:
+            k_result = (k.pos.to_json() if k.pos else None, k.status)
             if k.equipped:
-                k_result = (
-                    k.pos.to_json() if k.pos else None,
-                    k.status,
+                k_result += (
                     k.equipped.name,
                     k.base_attack + k.equipped.attack,
                     k.base_defence + k.equipped.defence,
                 )
             else:
-                k_result = (
-                    k.pos.to_json() if k.pos else None,
-                    k.status,
-                    None,
-                    k.base_attack,
-                    k.base_defence,
-                )
+                k_result += (None, k.base_attack, k.base_defence)
             result[k.colour] = k_result
 
         for i in items:
