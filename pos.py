@@ -11,3 +11,6 @@ class Pos:
     x: int
     knight: dict = None
     items: list = field(default_factory=list)
+
+    def __repr__(self):
+        return '[{}, {}]'.format(self.y, self.x)

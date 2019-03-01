@@ -12,10 +12,10 @@ class RunGame:
         self.arena = Arena()
         ab = self.arena.board
 
-        self.R = Knight('R', ab[0][0])
-        self.Y = Knight('Y', ab[0][7])
-        self.B = Knight('B', ab[7][0])
-        self.G = Knight('G', ab[7][7])
+        self.R = Knight('R', 'red', ab[0][0])
+        self.Y = Knight('Y', 'yellow', ab[0][7])
+        self.B = Knight('B', 'blue', ab[7][0])
+        self.G = Knight('G', 'green', ab[7][7])
 
         ab[0][0].knight = self.R
         ab[0][7].knight = self.Y
@@ -72,3 +72,5 @@ if __name__ == '__main__':
     game.run_instructions()
 
     game.arena.render()
+
+    print(Deserialize.serialize_gamestate((kR, kY, kB, kG), ()))
