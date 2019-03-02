@@ -2,7 +2,7 @@ from pathlib import Path
 from json import dumps
 
 
-class Deserialize:
+class Serialize:
     @staticmethod
     def read_moves():
         """

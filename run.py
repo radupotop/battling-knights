@@ -1,5 +1,5 @@
 from arena import Arena
-from deserialize import Deserialize
+from serialize import Serialize
 from item import Item
 from knight import Knight
 
@@ -45,7 +45,7 @@ class RunGame:
         )
 
     def run_instructions(self):
-        instructions = Deserialize.read_moves()
+        instructions = Serialize.read_moves()
 
         for (knight_id, direction) in instructions:
             knight = getattr(self, knight_id)
@@ -73,6 +73,6 @@ if __name__ == '__main__':
 
     game.arena.render()
 
-    state = Deserialize.serialize_gamestate((kR, kY, kB, kG), (item_axe, item_dagger, item_magicstaff, item_helmet))
-    Deserialize.commit_to_fs(state)
+    state = Serialize.serialize_gamestate((kR, kY, kB, kG), (item_axe, item_dagger, item_magicstaff, item_helmet))
+    Serialize.commit_to_fs(state)
 

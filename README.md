@@ -15,7 +15,7 @@ The `POS` class is the building block of the board; is used by both Knight and A
 
 A `Battle` class which deals with the life and death of knights.
 
-A `Serialize` and `Deserialize` class to read and write to the FS.
+A `Serialize` class to read and write to the FS.
 
 These classes reference each other like so:
 
@@ -58,7 +58,7 @@ A `pos` instance always knows whether it holds _items_ or a _knight_.
 
     serialize to JSON format and write to FS.
 
-## Deserialize class:
+## Serialize class:
 
     deserialize from move.txt file and run application
 
