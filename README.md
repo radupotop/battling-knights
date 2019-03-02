@@ -71,3 +71,17 @@ A `pos` instance always knows whether it holds _items_ or a _knight_.
 We are able to determine the position of a knight either by referring to `knight.pos`
 or by referring to `arena.board`.
 
+
+# Usage
+
+To run the app:
+
+    python run.py
+
+To run the test:
+
+    python test.py
+
+Moves are read in from `moves.txt`.
+
+The output is written to `final_state.json`.
