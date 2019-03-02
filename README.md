@@ -5,22 +5,33 @@ Note: This requires `Python 3.7` to run since it leverages the new `@dataclass` 
 
 We model this game using a few classes:
 
-The `Knight` class will hold properties such as ID, position, items equipped, base attack, etc.
+The `Knight` class will hold properties such as ID, position, item equipped, base attack, etc.
 
 The `Arena` class will be mainly concerned with storing the positon of everything on the board and moving things around.
 
 The `Item` class used to describe items on the board.
 
-The `POS` class is the building block of the board; is used by both Knight and Arena to determine their position.
+The `POS` class is the building block of the board; is used by Knight, Item and Arena to determine their position.
 
 A `Battle` class which deals with the life and death of knights.
 
 A `Serialize` class to read and write to the FS.
 
+A `RunGame` class which brings everything together:
+
+- reads instructions
+- sets initial knight positions
+- runs the game
+
+
 These classes reference each other like so:
 
-A knight instance has a `pos` attribute so it always knows where it's placed on the board.
-A `pos` instance always knows whether it holds _items_ or a _knight_.
+- A knight instance has a `pos` attribute so it always knows where it's placed on the board.
+- A `pos` instance always knows whether it holds _items_ or a _knight_.
+- An `item` instance will always reference its position as well.
+
+We are able to determine the position of a knight either by referring to `knight.pos`
+or by referring to `arena.board`.
 
 
 # Outline of classes
@@ -56,20 +67,18 @@ A `pos` instance always knows whether it holds _items_ or a _knight_.
 
 ## Serialize class:
 
-    serialize to JSON format and write to FS.
-
-## Serialize class:
-
-    deserialize from move.txt file and run application
+- Read instructions from from the `moves.txt` file
+- Serialize to JSON format and write to FS.
 
 
 ## Battle class:
 
-    Run deserialized instructions and update Arena, Knights, etc.
+    Battle and kill knights.
 
 
-We are able to determine the position of a knight either by referring to `knight.pos`
-or by referring to `arena.board`.
+## RunGame class:
+
+    Run instructions and update Arena, Knights, etc.
 
 
 # Usage
